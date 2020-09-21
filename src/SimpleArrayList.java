@@ -38,8 +38,8 @@ public class SimpleArrayList {
             throw new IndexOutOfBoundsException("Index: " + index + ", " + "Size: " + size);
         }
 
-        for(int i = items.length-2; i > index-1; i--) {
-            items[i+1] = items[i];
+        for(int i = size; i > index-1; i--) {
+            items[i] = items[i-1];
         }
         items[index] = s;
         size ++;
@@ -71,13 +71,12 @@ public class SimpleArrayList {
         if (x == -1) {
             return false;
         }
-
         return true;
     }
 
     public String get(int index) {
         if(index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index " + index + " out of bounds at " + size);
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + size);
         }
 
         return items[index];
@@ -98,7 +97,7 @@ public class SimpleArrayList {
 
     public String remove (int index) {
         if(index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index " + index + " out of bounds at " + size);
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + size);
         }
 
         String removed = items[index];
@@ -121,12 +120,12 @@ public class SimpleArrayList {
 
     public String set(int index, String s) {
         if(index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index " + index + " out of bounds at " + size);
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + size);
         }
 
-        String previousItem = items[index];
+        String replaced = items[index];
         items[index] = s;
-        return previousItem;
+        return replaced;
     }
 
     public int size() {
@@ -134,23 +133,24 @@ public class SimpleArrayList {
     }
 
     public void trimToSize() {
-        String[] temp = new String[size];
+        String[] tempArray = new String[size];
         for (int i = 0; i < size; i++) {
-            temp[i] = items[i];
+            tempArray[i] = items[i];
         }
-        items = temp;
+        items = tempArray;
     }
 
     public String toString() {
-        String values = "" ;
-        for (int i = 0; i < size -1; i++) {
-            values += items[i];
-            values += ", ";
+        String startString = "[";
+        String tempString = "" ;
+        for (int i = 0; i < size - 1; i++) {
+            tempString = tempString + items[i];
+            tempString = tempString + ", ";
         }
-        if (size != 0) {
-            values += items[size -1];
+        if (size > 0) {
+            tempString = tempString + items[size - 1];
         }
-        String finalString = "[" + values + "]";
+        String finalString = startString + tempString + "]";
         return finalString;
     }
 }
